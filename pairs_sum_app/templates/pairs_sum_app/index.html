@@ -1,0 +1,46 @@
+<form id="pairsForm">
+    <label for="numbers">Enter numbers (comma-separated):</label>
+    <input type="text" id="numbers" required>
+    <br>
+    <label for="target_sum">Enter target sum:</label>
+    <input type="number" id="target_sum" required>
+    <br>
+    <button type="submit">Find Pairs</button>
+</form>
+
+<!-- Display the pairs here after the form is submitted -->
+<div id="pairs"></div>
+
+<script>
+    document.getElementById("pairsForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        const numbers = document.getElementById("numbers").value;
+        const target_sum = document.getElementById("target_sum").value;
+
+        // Create a JSON payload
+        const data = JSON.stringify({ numbers, target_sum });
+
+        // Send a POST request to the view
+        fetch("{% url 'find_number_pairs' %}", {
+            method: "POST",
+            body: data,
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}", // Include the CSRF token
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Display the pairs in the 'pairs' div
+            const pairsDiv = document.getElementById("pairs");
+            if (data.error) {
+                pairsDiv.textContent = `Error: ${data.error}`;
+            } else {
+                pairsDiv.textContent = `Pairs: ${JSON.stringify(data.pairs)}`;
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    });
+</script>
