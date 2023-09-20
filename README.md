@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 ### Mach Eight Sample Project
 
 App that finds pairs of integers from a list that
@@ -21,6 +21,4 @@ Sample output is shown below.
 - Run the app with command: python manage.py runserver
 
 - When the server it's running: Open the URL given by django and enter the numbers (I didn't use a DB because it's not necessary store the nums.)
-=======
-HI
->>>>>>> e804f3289f0d248bf49b90842b7e93f3c7f227d9
+
